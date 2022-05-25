@@ -3,10 +3,15 @@ import React, { createContext, useState } from "react";
   const userContext = createContext({});
 
 const UserContextProvider = ({ children }) => {
-  const [state, saveState] = useState('changeNAme');
+  const [state, saveState] = useState('Dados do licenciado');
+  const [form, setForm] = useState({apelido: "Oliveira"});
+
+  React.useEffect(()=>{
+    console.log({form});
+  },[form])
 
   return (
-    <userContext.Provider value={{ state, saveState }}>
+    <userContext.Provider value={{ state, saveState, form, setForm }}>
       {children}
     </userContext.Provider>
   );

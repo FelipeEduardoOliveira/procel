@@ -24,4 +24,5 @@ export const Content = styled.div`
   grid-area: 2 / 2 / 6 / 6;
   background-color: red;
   margin-left: 10px;
+  /* overflow: scroll; */
 `;
