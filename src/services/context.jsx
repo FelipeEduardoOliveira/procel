@@ -4,7 +4,7 @@ import React, { createContext, useState } from "react";
 
 const UserContextProvider = ({ children }) => {
   const [state, saveState] = useState('Dados do licenciado');
-  const [form, setForm] = useState({apelido: "Oliveira"});
+  const [form, setForm] = useState();
 
   React.useEffect(()=>{
     console.log({form});
