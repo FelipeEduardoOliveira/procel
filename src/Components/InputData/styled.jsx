@@ -5,9 +5,9 @@ export const ContainerInput = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: center;
-padding: 15px 0;
-width: 48%;
-margin-right: 15px;
+width: 100%;
+padding-bottom: 10px;
+
 `
 
 export const TitleInput = styled.label`
@@ -19,6 +19,14 @@ padding-bottom: 8px;
 `
 export const Input = styled.input`
 border: 1px solid #D5D5D5;
-padding: 10px 10px;
+padding: 10px 0px;
+padding-left: 10px;
 border-radius: 5px;
+width: 98%;
+outline: none;
+
+/* outline-offset: 10px; */
+
+
+
 `
