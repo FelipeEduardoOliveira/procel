@@ -1,9 +1,14 @@
-import React, { useContext, useState } from "react";
-import { ContainerForm, FieldContainerInput } from "./styled";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  ContainerForm,
+  FieldContainerInput,
+  FieldContainerDoubleInput,
+  Teste
+} from "./styled";
 import InputData from "../InputData";
 import userContext from "../../services/context";
-import Button from "../Button";
-const Form = () => {
+
+const Form = ({actionButton}) => {
   const [cod_licen, setCod_licen] = useState("");
   const [data_limite, setData_limite] = useState("");
   const [apelido, setApelido] = useState("");
@@ -16,6 +21,18 @@ const Form = () => {
   const [qtde_relat, setQtde_relat] = useState("");
   const { setForm } = useContext(userContext);
 
+
+  useEffect(()=>{
+    if(actionButton === 'save' ){
+      saveAllFields();
+      return;
+    }
+
+    if(actionButton === 'clean'){
+      clearAllFields();
+      return;
+    }
+  },[actionButton])
   const clearAllFields = () => {
     setCod_licen("");
     setData_limite("");
@@ -29,6 +46,7 @@ const Form = () => {
     setQtde_relat("");
   };
 
+  
   const saveAllFields = () => {
     const payload = {
       cod_licen: cod_licen,
@@ -68,16 +86,6 @@ const Form = () => {
           value={cod_licen}
         />
         <InputData
-          placeholder={"Data Limite"}
-          title={"Data Limite"}
-          type={"date"}
-          uniqueKey={"data_limite"}
-          onChange={(e) => setData_limite(e.target.value)}
-          value={data_limite}
-        />
-      </FieldContainerInput>
-      <FieldContainerInput>
-        <InputData
           placeholder={"Apelido"}
           title={"Apelido"}
           type={"text"}
@@ -86,16 +94,6 @@ const Form = () => {
           value={apelido}
         />
         <InputData
-          placeholder={"Data Criação"}
-          title={"Data Criação"}
-          type={"date"}
-          uniqueKey={"data_criacao"}
-          onChange={(e) => setData_criacao(e.target.value)}
-          value={data_criacao}
-        />
-      </FieldContainerInput>
-      <FieldContainerInput>
-        <InputData
           placeholder={"Validade"}
           title={"Validade"}
           type={"date"}
@@ -103,6 +101,50 @@ const Form = () => {
           onChange={(e) => setValidade(e.target.value)}
           value={validade}
         />
+
+        <FieldContainerDoubleInput>
+      <Teste>
+      <InputData
+            placeholder={"Dias alerta"}
+            title={"Dias alerta"}
+            type={"text"}
+            uniqueKey={"dias_alerta"}
+            onChange={(e) => setDias_alerta(e.target.value)}
+            value={dias_alerta}
+          />
+      </Teste>
+      <Teste>
+      <InputData
+            placeholder={"Qtde indicadores"}
+            title={"Qtde indicadores"}
+            type={"text"}
+            uniqueKey={"qtde_indic"}
+            onChange={(e) => setQtde_indic(e.target.value)}
+            value={qtde_indic}
+          />
+      </Teste>
+         
+        </FieldContainerDoubleInput>
+      </FieldContainerInput>
+      <FieldContainerInput>
+        <InputData
+          placeholder={"Data Limite"}
+          title={"Data Limite"}
+          type={"date"}
+          uniqueKey={"data_limite"}
+          onChange={(e) => setData_limite(e.target.value)}
+          value={data_limite}
+        />
+
+        <InputData
+          placeholder={"Data Criação"}
+          title={"Data Criação"}
+          type={"date"}
+          uniqueKey={"data_criacao"}
+          onChange={(e) => setData_criacao(e.target.value)}
+          value={data_criacao}
+        />
+
         <InputData
           placeholder={"Última verificação"}
           title={"Última verificação"}
@@ -111,52 +153,37 @@ const Form = () => {
           onChange={(e) => setUltima_verifica(e.target.value)}
           value={ultima_verifica}
         />
-      </FieldContainerInput>
-      <FieldContainerInput>
-        <InputData
-          placeholder={"Dias alerta"}
-          title={"Dias alerta"}
-          type={"text"}
-          uniqueKey={"dias_alerta"}
-          onChange={(e) => setDias_alerta(e.target.value)}
-          value={dias_alerta}
-        />
-        <InputData
-          placeholder={"Qtde indicadores"}
-          title={"Qtde indicadores"}
-          type={"text"}
-          uniqueKey={"qtde_indic"}
-          onChange={(e) => setQtde_indic(e.target.value)}
-          value={qtde_indic}
-        />
-        <InputData
-          placeholder={"Qtde Checkwin"}
-          title={"Qtde Checkwin"}
-          type={"text"}
-          uniqueKey={"qtde_check"}
-          onChange={(e) => setQtde_check(e.target.value)}
-          value={qtde_check}
-        />
-        <InputData
-          placeholder={"Qtde Relatórios"}
-          title={"Qtde Relatórios"}
-          type={"text"}
-          uniqueKey={"qtde_relat"}
-          onChange={(e) => setQtde_relat(e.target.value)}
-          value={qtde_relat}
-        />
+
+        <FieldContainerDoubleInput>
+          <Teste>
+          <InputData
+            placeholder={"Qtde Checkwin"}
+            title={'Qtde \n Checkwin'}
+
+            type={"text"}
+            uniqueKey={"qtde_check"}
+            onChange={(e) => setQtde_check(e.target.value)}
+            value={qtde_check}
+          />
+
+          </Teste>
+          <Teste>
+          <InputData
+            placeholder={"Qtde Relatórios"}
+            title={"Qtde Relatórios"}
+            type={"text"}
+            uniqueKey={"qtde_relat"}
+            onChange={(e) => setQtde_relat(e.target.value)}
+            value={qtde_relat}
+          />
+
+          </Teste>
+         
+       
+        </FieldContainerDoubleInput>
       </FieldContainerInput>
 
-      <Button
-        label={"Salvar"}
-        color={"green"}
-        onClick={() => saveAllFields()}
-      />
-      <Button
-        label={"Cancelar"}
-        color={"orange"}
-        onClick={() => clearAllFields()}
-      />
+     
     </ContainerForm>
   );
 };
