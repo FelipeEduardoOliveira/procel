@@ -1,18 +1,22 @@
 import React, { useContext, useState } from "react";
-import { ContainerContent, ContainerButtons } from "./styled";
+import { useParams } from "react-router-dom";
+import { ContainerContentMain, ContainerButtons } from "./styled";
 import Form from "../Form";
+import FormCadMenu from '../Form/FormCadastroMenu';
 import userContext from "../../services/context";
-import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
 import Button from '../Button';
-const ContentContainer = () => {
+const ContentContainer = (props) => {
   const { state } = useContext(userContext);
   const [actionButton, setActionbutton] = useState('');
 
+const params = useParams('only-form/:idOnlyPage');
+  const  {idOnlyPage} = params;
+
+  console.log({idOnlyPage})
   
   return (
-    <ContainerContent>
-      {state === "Dados do licenciado" && (
+    <ContainerContentMain>
+      {state === "Dados do licenciado" | idOnlyPage === 'Dados-do-licenciado' && (
         <>
         <Form actionButton={actionButton}/>
 
@@ -33,17 +37,28 @@ const ContentContainer = () => {
         
         </>
       )}
-      {state !== "Dados do licenciado" && state !== "form2" && (
-        <Box sx={{ width: "100%"}}>
-          <Skeleton width={"80%"} animation={"pulse"} height={50}/>
-          <Skeleton width={"80%"} animation={"wave"} height={50}/>
-          <Skeleton width={"80%"} animation={"pulse"} height={50}/>
-          <Skeleton width={"80%"} animation={"wave"} height={50}/>
-          <Skeleton width={"80%"} animation={"pulse"} height={50}/>
-          <Skeleton width={"80%"} animation={"pulse"} height={50}/>
-          </Box>
+      {state === "Cadastro-menu" | idOnlyPage === 'Cadastro-menu' && (
+        <>
+        <FormCadMenu actionButton={actionButton}/>
+
+        <ContainerButtons>
+
+        <Button
+        label={"Confirmar"}
+        color={"#95b75d"}
+        onClick={() => setActionbutton('save')}
+      />
+      <Button
+        label={"Cancelar"}
+        color={"#fe2f0a"}
+        onClick={() => setActionbutton('clean')}
+      />
+
+        </ContainerButtons>
+        
+        </>
       )}
-    </ContainerContent>
+    </ContainerContentMain>
   );
 };
 

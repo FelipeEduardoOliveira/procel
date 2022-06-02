@@ -6,27 +6,11 @@ import ContentContainer from './Components/Content';
 import "./App.css";
 import {UserContextProvider} from './services/context';
 import { Container, Sidebar, Header, Content } from "./styles/Global";
-
+import Rotas from './services/Routes';
 function App() {
   return (
-    <UserContextProvider>
-      <Container>
-      <Sidebar>
-        {" "}
-        <SidebarMenu />{" "}
-      </Sidebar>
-      <Header>
-        {" "}
-      <HeaderTitle/>
-      </Header>
-      <Content>
-        {" "}
-        <ContentContainer/>
-
-        
-      </Content>
-    </Container>
-    </UserContextProvider>
+    
+    <Rotas/>
   );
 }
 

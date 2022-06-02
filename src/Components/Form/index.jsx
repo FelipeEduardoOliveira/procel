@@ -28,6 +28,13 @@ const Form = ({actionButton}) => {
       return;
     }
 
+  //   function LeitorDeTexto(val){
+  //     let leitor = new SpeechSynthesisUtterance();
+  //     leitor.text = val;
+  //     leitor.lang = 'pt-BR';
+  //     return window.speechSynthesis.speak(leitor);
+  // }
+
     if(actionButton === 'clean'){
       clearAllFields();
       return;
