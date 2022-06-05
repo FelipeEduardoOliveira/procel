@@ -7,14 +7,19 @@ import {
   CheckboxContentInput,
 } from "./styled";
 import InputData from "../../InputData";
+import TextArea from "../../TextArea";
+import LineSeparator from "../../LineSeparator";
 import userContext from "../../../services/context";
+import api from "../../../services/Api";
+import { getStorageApi } from "../../../services/utils/storage";
 
-const FormCadMenu = ({ actionButton }) => {
+const FormCadMenu = ({ actionButton, fieldsRender }) => {
   const { setForm } = useContext(userContext);
-  const [cod_cad_men, setCod_cad_men] = useState("");
-  const [date_criac, setDate_criac] = useState("");
-  const [nome_cad_menu, setNome_cad_menu] = useState("");
-  const [active_id, setActive_id] = useState(false);
+  const [cod_cad_men, setCod_cad_men] = useState(fieldsRender.cod);
+  const [date_criac, setDate_criac] = useState(fieldsRender.dateCriation);
+  const [nome_cad_menu, setNome_cad_menu] = useState(fieldsRender.name);
+  const [active_id, setActive_id] = useState(fieldsRender.active);
+  const [observation, setObservation] = useState(fieldsRender.observation);
 
   useEffect(() => {
     if (actionButton === "save") {
@@ -27,6 +32,7 @@ const FormCadMenu = ({ actionButton }) => {
       return;
     }
   }, [actionButton]);
+
   const clearAllFields = () => {
     setCod_cad_men("");
     setDate_criac("");
@@ -39,22 +45,26 @@ const FormCadMenu = ({ actionButton }) => {
       cod_cad_men: cod_cad_men,
       date_criac: date_criac,
       nome_cad_menu: nome_cad_menu,
-      active_id: active_id
+      active_id: active_id,
     };
 
     setForm(payload);
     setCod_cad_men("");
     setDate_criac("");
     setNome_cad_menu("");
-    setActive_id(false)
+    setActive_id(false);
   };
 
+  
+
   return (
-    <ContainerForm>
+    <ContainerForm >
       <FieldContainerInput>
         <FilterContainerInputSepareted>
           <FilterContainerInputSepareted__div width={"20%"}>
-            <InputData
+
+            {fieldsRender.hasOwnProperty('cod')&&(
+              <InputData
               placeholder={"Código"}
               title={"Código"}
               uniqueKey={"cod_cad_men"}
@@ -62,35 +72,60 @@ const FormCadMenu = ({ actionButton }) => {
               onChange={(e) => setCod_cad_men(e.target.value)}
               value={cod_cad_men}
             />
+            )}
+            
           </FilterContainerInputSepareted__div>
 
           <FilterContainerInputSepareted__div width={"70%"}>
-            <CheckboxContentInput>
-              <label htmlFor="ativo_id">
-                Ativo
-                
-              </label>
-              <input type={"checkbox"} id={'ativo_id'} onClick={() => setActive_id(!active_id)} defaultChecked={active_id} />
+
+          {fieldsRender.hasOwnProperty('active')&&(
+              <CheckboxContentInput>
+              <label htmlFor="ativo_id">Ativo</label>
+              <input
+                type={"checkbox"}
+                id={"ativo_id"}
+                onClick={() => setActive_id(!active_id)}
+                defaultChecked={active_id}
+              />
             </CheckboxContentInput>
-            <InputData
+            )}
+            {fieldsRender.hasOwnProperty('dateCriation')&&(
+              <InputData
               placeholder={"Data de criação"}
               title={"Data de criação"}
               type={"date"}
               uniqueKey={"date_criac"}
-              onChange={(e) => setDate_criac(e.target.value)}
+                onChange={(e) => setDate_criac(e.target.value)}
               value={date_criac}
             />
+            )}
+            
           </FilterContainerInputSepareted__div>
         </FilterContainerInputSepareted>
 
-        <InputData
-          placeholder={"Nome"}
-          title={"Nome"}
-          type={"text"}
-          uniqueKey={"nome_cad_menu"}
-          onChange={(e) => setNome_cad_menu(e.target.value)}
-          value={nome_cad_menu}
-        />
+        {fieldsRender.hasOwnProperty('name')&&(
+              <InputData
+              placeholder={"Nome"}
+              title={"Nome"}
+              type={"text"}
+              uniqueKey={"nome_cad_menu"}
+              onChange={(e) => setNome_cad_menu(e.target.value)}
+              value={nome_cad_menu}
+            />
+            )}
+        {fieldsRender.hasOwnProperty('observation')&&(
+              <TextArea
+              id={"observations"}
+              placeholder={"Observações"}
+              title={"Observações"}
+              onChange={(event) => setObservation(event.target.value)}
+              value={observation}
+              
+            />
+            )}
+
+      
+        <LineSeparator />
       </FieldContainerInput>
     </ContainerForm>
   );

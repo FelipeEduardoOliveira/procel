@@ -22,7 +22,7 @@ border: 1px solid #D5D5D5;
 padding: 10px 0px;
 padding-left: 10px;
 border-radius: 5px;
-width: 98%;
+/* width: 100%; */
 outline: none;
 
 /* outline-offset: 10px; */
