@@ -3,9 +3,9 @@ import {
   ButtonContainer
 } from "./styled";
 
-const Button = ({color, colorLetter, onClick, label }) => {
+const Button = ({color, colorLetter, onClick, label, onSubmit }) => {
   return (
-            <ButtonContainer onClick={onClick} color={color} colorLetter={colorLetter}>
+            <ButtonContainer onClick={onClick} color={color} colorLetter={colorLetter} onSubmit={onSubmit}>
               {label}
             </ButtonContainer>
       

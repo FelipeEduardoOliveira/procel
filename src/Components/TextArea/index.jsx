@@ -4,10 +4,10 @@ import {
   LabelTextArea,
   TextAreaContainer,
 } from "./styled";
-const TextArea = ({ title, placeholder, rows, id, value, onChange }) => {
+const TextArea = ({ title, placeholder, rows, id, value, onChange, readonly, obrigatorio }) => {
   return (
     <TextAreaContainerMain>
-      <LabelTextArea htmlFor={id}>{title}:</LabelTextArea>
+      <LabelTextArea htmlFor={id}>{title}: {obrigatorio == 1&&('*')}</LabelTextArea>
 
       <TextAreaContainer
         id={id}
@@ -17,6 +17,8 @@ const TextArea = ({ title, placeholder, rows, id, value, onChange }) => {
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        readOnly={readonly}
+        required={obrigatorio}
       >
       </TextAreaContainer>
     </TextAreaContainerMain>

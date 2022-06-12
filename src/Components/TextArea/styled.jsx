@@ -17,7 +17,9 @@ export const LabelTextArea = styled.label`
 `
 
 export const TextAreaContainer = styled.textarea`
-
+:invalid{
+    border: 1px solid #c00e0e;
+}
 border: 1px solid #D5D5D5;
     padding: 10px 0px;
     padding-left: 10px;

@@ -9,7 +9,7 @@ import Form from "../Form";
 import FormCadMenu from "../Form/FormCadastroMenu";
 import userContext from "../../services/context";
 import Button from "../Button";
-import { FieldsCad } from "../../services/utils/handleFields";
+import { FieldsCad, FieldaReturnApi } from "../../services/utils/handleFields";
 
 const ContentContainer = (props) => {
   const { state } = useContext(userContext);
@@ -18,15 +18,19 @@ const ContentContainer = (props) => {
   const params = useParams("only-form/:idOnlyPage");
   const { idOnlyPage } = params;
 
-  console.log({ idOnlyPage });
+
+
+
+ 
 
   return (
     <ContainerContentMain>
       {state === "Dados do licenciado" ||
         (idOnlyPage === "Dados-do-licenciado" && (
           <>
-            <Form actionButton={actionButton} />
-
+            <Form actionButton={actionButton}>
+              
+              
             <ContainerButtons>
               <Button
                 label={"Salvar"}
@@ -39,43 +43,52 @@ const ContentContainer = (props) => {
                 onClick={() => setActionbutton("clean")}
               />
             </ContainerButtons>
+
+            </Form>
           </>
         ))}
       {state === "Cadastro-menu" ||
         (idOnlyPage === "Cadastro-menu" && (
           <>
-            {FieldsCad.map((item) => {
-              return (
-                <div key={item.typeForm}>
+            <div key={'Cadastro Menu'}>
+              <p
+                style={{
+                  backgroundColor: "white",
+                  padding: "10px 0",
+                  margin: "20px 0",
+                  textAlign: "center",
+                  fontSize: "20px",
+                }}
+              >
+                Cadastro Menu
+              </p>
+              <FormCadMenu fieldsRender={FieldaReturnApi}>
 
-                  <p style={{backgroundColor:'white', padding:'10px 0', margin:'20px 0' , textAlign: 'center', fontSize:'20px'}}>{item.typeForm}</p>
-                  <FormCadMenu actionButton={actionButton} fieldsRender={item} />
+              <ContainerButtons justifyContent={"space-between"}>
+                <DivContainerButton lado={"start"}>
+                  <Button
+                    label={"Opções"}
+                    color={"#418bca"}
+                    onClick={() => setActionbutton("#")}
+                  />
+                </DivContainerButton>
 
-                  <ContainerButtons justifyContent={"space-between"}>
-                    <DivContainerButton lado={"start"}>
-                      <Button
-                        label={"Opções"}
-                        color={"#418bca"}
-                        onClick={() => setActionbutton("#")}
-                      />
-                    </DivContainerButton>
+                <DivContainerButton lado={"end"}>
+                  <Button
+                    label={"Confirmar"}
+                    color={"#5bb85c"}
+                    onClick={() => setActionbutton("save")}
+                  />
+                  <Button
+                    label={"Cancelar"}
+                    color={"#da534f"}
+                    onClick={() => setActionbutton("clean")}
+                  />
+                </DivContainerButton>
+              </ContainerButtons>
 
-                    <DivContainerButton lado={"end"}>
-                      <Button
-                        label={"Confirmar"}
-                        color={"#5bb85c"}
-                        onClick={() => setActionbutton("save")}
-                      />
-                      <Button
-                        label={"Cancelar"}
-                        color={"#da534f"}
-                        onClick={() => setActionbutton("clean")}
-                      />
-                    </DivContainerButton>
-                  </ContainerButtons>
-                </div>
-              );
-            })}
+              </FormCadMenu>
+            </div>
           </>
         ))}
     </ContainerContentMain>

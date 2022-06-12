@@ -18,6 +18,9 @@ font-family: Arial, Helvetica, sans-serif;
 padding-bottom: 8px;
 `
 export const Input = styled.input`
+:invalid{
+    border: 1px solid #c00e0e;
+}
 border: 1px solid #D5D5D5;
 padding: 10px 0px;
 padding-left: 10px;
