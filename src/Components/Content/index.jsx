@@ -51,17 +51,7 @@ const ContentContainer = (props) => {
         (idOnlyPage === "Cadastro-menu" && (
           <>
             <div key={'Cadastro Menu'}>
-              <p
-                style={{
-                  backgroundColor: "white",
-                  padding: "10px 0",
-                  margin: "20px 0",
-                  textAlign: "center",
-                  fontSize: "20px",
-                }}
-              >
-                Cadastro Menu
-              </p>
+             
               <FormCadMenu fieldsRender={FieldaReturnApi}>
 
               <ContainerButtons justifyContent={"space-between"}>
