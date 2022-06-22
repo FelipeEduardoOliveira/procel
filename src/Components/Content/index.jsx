@@ -34,7 +34,7 @@ const ContentContainer = (props) => {
       }
 
      
-        await api.post(`cadastro/setdadoscadastro/${COD_LICENCIAMENTO}/${COD_ROTINA}/${COD_USUARIO}/${TIPO}`, UpdatePayload).then((response)=>{
+        await api.post(`cadastro/setdadoscadastro/${COD_LICENCIAMENTO}/${COD_ROTINA}/${COD_USUARIO}/${COD_PK}`, UpdatePayload).then((response)=>{
           console.log(response.data);
         })
       
