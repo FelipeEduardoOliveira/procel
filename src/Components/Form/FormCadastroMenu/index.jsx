@@ -53,7 +53,7 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
         <FilterContainerInputSepareted>
           <FilterContainerInputSepareted__div width={"20%"}>
             {list.map((item, index) => {
-              if (item?.fieldname === "cod_sistema") {
+              if (item?.tipo_campo === "cod") {
                 // setValueUpdate({...valueUpdate, cod_sistema:item.conteudo})
                 return (
                   <InputData
@@ -76,7 +76,7 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
 
           <FilterContainerInputSepareted__div width={"70%"}>
             {list.map((item, index) => {
-              if (item?.fieldname === "atv_sistema") {
+              if (item?.tipo_campo === "atv") {
                 // setValueUpdate({...valueUpdate, atv_sistema:item.conteudo})
                 return (
                   <CheckboxContentInput key={item.cod_g3camposcad}>
@@ -98,7 +98,7 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
               }
             })}
             {list.map((item, index) => {
-              if (item?.fieldname === "dtc_sistema") {
+              if (item?.tipo_campo === "dtc") {
                 // setValueUpdate({...valueUpdate, dtc_sistema:item.conteudo})
                 return (
                   <InputData
@@ -121,7 +121,7 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
         </FilterContainerInputSepareted>
 
         {list.map((item, index) => {
-          if (item?.fieldname === "nome_sistema") {
+          if (item?.tipo_campo === "nome") {
             // setValueUpdate({...valueUpdate, nome_sistema:item.conteudo})
             return (
               <InputData
@@ -139,7 +139,7 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
           }
         })}
         {list.map((item, index) => {
-          if (item?.fieldname === "obs_sistema") {
+          if (item?.tipo_campo === "obs") {
             // setValueUpdate({...valueUpdate, obs_sistema:item.conteudo})
             return (
               <TextArea
