@@ -12,9 +12,11 @@ import Button from "../Button";
 import { FieldaReturnApi } from "../../services/utils/handleFields";
 import api from "../../services/Api";
 
+import { UserContextProvider } from "../../services/context";
+
 import { Toast } from "devextreme-react/toast";
 const ContentContainer = (props) => {
-  const { state } = useContext(userContext);
+  const { list, setList } = useContext(userContext);
   const [actionButton, setActionbutton] = useState("");
   const [updateValue, setUpdateValue] = useState("");
   const [fiedlsApi, setFiedlsApi] = useState();
@@ -37,8 +39,10 @@ const ContentContainer = (props) => {
     COD_PK,
   } = params;
 
-  const closeModal = async ()=>{
 
+ 
+
+  const closeModal = async (e) => {
 
     let closePayload = {
       COD_LICENCIAMENTO: COD_LICENCIAMENTO,
@@ -47,16 +51,22 @@ const ContentContainer = (props) => {
       COD_PK: COD_PK,
     };
 
-    api.post('cadastro/updateRotinaUser',closePayload);
+    api.post("cadastro/updateRotinaUser", closePayload);
+  };
 
-  }
+  const saveUpdate = async () => {
 
-  const saveUpdate = async (value) => {
+    const updateValues =  list.reduce((target, key, index) => {
+      target[key.fieldname] = key.conteudo;
+
+      return target
+    });
+    
     const UpdatePayload = {
-      cod_sistema: value?.conteudo,
-      nome_sistema: value?.nome_sistema,
-      dtc_sistema: value?.dtc_sistema,
-      atv_sistema: value?.atv_sistema,
+      cod_sistema: updateValues?.conteudo,
+      nome_sistema: updateValues?.nome_sistema,
+      dtc_sistema: updateValues?.dtc_sistema,
+      atv_sistema: updateValues?.atv_sistema,
     };
 
     await api
@@ -73,20 +83,16 @@ const ContentContainer = (props) => {
 
         closeModal();
       })
-      .catch(()=>{
-
+      .catch(() => {
         setToastConfig({
           isVisible: true,
           type: "error",
           message: "Ops.. Tente novamente mais tarde!",
         });
-
       });
 
     return;
   };
-
-
 
   function onHiding() {
     setToastConfig({
@@ -105,7 +111,7 @@ const ContentContainer = (props) => {
 
     await api.post("cadastro/getcamposcadastro", payload).then((response) => {
       // let data = response.data
-      setFiedlsApi(response.data);
+      setList(response.data);
     });
   };
 
@@ -113,10 +119,11 @@ const ContentContainer = (props) => {
     getInfo();
   }, []);
 
+
   return (
     <ContainerContentMain>
       <>
-        {fiedlsApi && (
+        {list && (
           <div key={"Cadastro Menu"}>
             <Toast
               visible={toastConfig.isVisible}
@@ -126,46 +133,43 @@ const ContentContainer = (props) => {
               displayTime={600}
             />
 
-            <FormCadMenu
-              setUpdateValue={setUpdateValue}
-              newFields={fiedlsApi}
-              saveUpdate={saveUpdate}
-            >
-              {TIPO.toLowerCase() === "v" ? (
-                <ContainerButtons justifyContent={"space-between"}>
-                  <DivContainerButton lado={"start"}>
-                    <Button
-                      label={"Fechar"}
-                      color={"#da534f"}
-                      onClick={() => closeModal()}
-                    />
-                  </DivContainerButton>
-                </ContainerButtons>
-              ) : (
-                <ContainerButtons justifyContent={"space-between"}>
-                  <DivContainerButton lado={"start"}>
-                    <Button
-                      label={"Opções"}
-                      color={"#418bca"}
-                      onClick={() => setActionbutton("#")}
-                    />
-                  </DivContainerButton>
+              <FormCadMenu
+              >
+                {TIPO.toLowerCase() === "v" ? (
+                  <ContainerButtons justifyContent={"space-between"}>
+                    <DivContainerButton lado={"start"}>
+                      <Button
+                        label={"Fechar"}
+                        color={"#da534f"}
+                        onClick={() => closeModal()}
+                      />
+                    </DivContainerButton>
+                  </ContainerButtons>
+                ) : (
+                  <ContainerButtons justifyContent={"space-between"}>
+                    <DivContainerButton lado={"start"}>
+                      <Button
+                        label={"Opções"}
+                        color={"#418bca"}
+                        onClick={() => setActionbutton("#")}
+                      />
+                    </DivContainerButton>
 
-                  <DivContainerButton lado={"end"}>
-                    <Button
-                      label={"Confirmar"}
-                      color={"#5bb85c"}
-                      //  onClick={() => console.log('')}
-                    />
-                    <Button
-                      label={"Cancelar"}
-                      color={"#da534f"}
-                      onClick={() => closeModal()}
-                    />
-                  </DivContainerButton>
-                </ContainerButtons>
-              )}
-            </FormCadMenu>
+                    <DivContainerButton lado={"end"}>
+                      <Button
+                        label={"Confirmar"}
+                        color={"#5bb85c"}
+                         onClick={() => saveUpdate()}
+                      />
+                      <Button
+                        label={"Cancelar"}
+                        color={"#da534f"}
+                        onClick={() => closeModal()}
+                      />
+                    </DivContainerButton>
+                  </ContainerButtons>
+                )}
+              </FormCadMenu>
           </div>
         )}
       </>

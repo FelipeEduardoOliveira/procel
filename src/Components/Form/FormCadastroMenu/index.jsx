@@ -11,23 +11,11 @@ import TextArea from "../../TextArea";
 import LineSeparator from "../../LineSeparator";
 import userContext from "../../../services/context";
 
-const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
-  const [list, setList] = useState([]);
-  const { state } = useContext(userContext);
-  const [valueUpdate, setValueUpdate] = useState({});
-  const copyForm = (value) => {
-    setList(value);
-  };
+const FormCadMenu = ({  children }) => {
+  const { list, setList } = useContext(userContext);
+  
 
-  const getPaylodNewValues = () => {
-   let teste =  list.reduce((target, key, index) => {
-      target[key.fieldname] = key.conteudo;
-
-      return target
-    });
-
-    return teste;
-  };
+ 
 
   const setValue = (index, name, value) => {
     let copy = [...list];
@@ -35,24 +23,15 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
     setList(copy);
   };
 
-  const handleSubmit = async (e) => {
-   
-    let payload = await getPaylodNewValues();
-       setUpdateValue(payload);
-       saveUpdate(payload)
-    e.preventDefault();
-  };
+  
 
-  useEffect(() => {
-    copyForm(newFields);
-  }, []);
 
   return (
-    <ContainerForm onSubmit={(e) => handleSubmit(e)}>
+    <ContainerForm onSubmit={(e) => e.preventDefault()}>
       <FieldContainerInput>
         <FilterContainerInputSepareted>
           <FilterContainerInputSepareted__div width={"20%"}>
-            {list.map((item, index) => {
+            {list&& list.map((item, index) => {
               if (item?.tipo_campo === "cod") {
                 // setValueUpdate({...valueUpdate, cod_sistema:item.conteudo})
                 return (
