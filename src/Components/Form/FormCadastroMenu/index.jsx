@@ -100,17 +100,20 @@ const FormCadMenu = ({ setUpdateValue, newFields, children, saveUpdate }) => {
             {list.map((item, index) => {
               if (item?.tipo_campo === "dtc") {
                 // setValueUpdate({...valueUpdate, dtc_sistema:item.conteudo})
+                
                 return (
                   <InputData
                     key={item.cod_g3camposcad}
                     placeholder={item.caption}
                     title={item.caption}
                     uniqueKey={item.fieldname}
-                    type={"date"}
+                    type={"datetime-local"}
+                    mydateFormat="DD/MM/YYYY, hh:mm:ss"
                     onChange={(e) =>
-                      setValue(index, "conteudo", e.target.value)
+                      {setValue(index, "conteudo", e.target.value)
                     }
-                    value={item.conteudo}
+                    }
+                    value={item.conteudo.substring(16,0)}
                     readonly={item.readonly}
                     obrigatorio={item.obrigatorio}
                   />

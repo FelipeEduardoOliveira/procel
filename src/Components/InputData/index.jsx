@@ -10,7 +10,8 @@ const InputData = ({
   value,
   onClick,
   readonly,
-  obrigatorio
+  obrigatorio,
+  mydateFormat
 }) => {
   return (
     <ContainerInput>
@@ -24,6 +25,7 @@ const InputData = ({
         onClick={onClick}
         readOnly={readonly}
         required={obrigatorio}
+        my-date-format={mydateFormat}
       />
     </ContainerInput>
   );
