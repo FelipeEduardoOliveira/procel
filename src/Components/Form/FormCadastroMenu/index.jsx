@@ -23,11 +23,17 @@ const FormCadMenu = ({  children }) => {
     setList(copy);
   };
 
+
+  const onSubmit = (e)=>{
+
+    console.log({e})
+    e.preventDefault()
+  }
   
 
 
   return (
-    <ContainerForm onSubmit={(e) => e.preventDefault()}>
+    <ContainerForm onSubmit={(e) =>onSubmit()}>
       <FieldContainerInput>
         <FilterContainerInputSepareted>
           <FilterContainerInputSepareted__div width={"20%"}>
@@ -92,7 +98,7 @@ const FormCadMenu = ({  children }) => {
                       {setValue(index, "conteudo", e.target.value)
                     }
                     }
-                    value={item.conteudo.substring(16,0)}
+                    value={item.conteudo&&item.conteudo.substring(16,0)}
                     readonly={item.readonly}
                     obrigatorio={item.obrigatorio}
                   />
