@@ -37,6 +37,20 @@ const ContentContainer = (props) => {
     COD_PK,
   } = params;
 
+  const closeModal = async ()=>{
+
+
+    let closePayload = {
+      COD_LICENCIAMENTO: COD_LICENCIAMENTO,
+      COD_ROTINA: COD_ROTINA,
+      COD_USUARIO: COD_USUARIO,
+      COD_PK: COD_PK,
+    };
+
+    api.post('cadastro/updateRotinaUser',closePayload);
+
+  }
+
   const saveUpdate = async (value) => {
     const UpdatePayload = {
       cod_sistema: value?.conteudo,
@@ -56,6 +70,8 @@ const ContentContainer = (props) => {
           type: "success",
           message: "Cadastro atualizado com sucesso!",
         });
+
+        closeModal();
       })
       .catch(()=>{
 
@@ -121,7 +137,7 @@ const ContentContainer = (props) => {
                     <Button
                       label={"Fechar"}
                       color={"#da534f"}
-                      onClick={() => setActionbutton("#")}
+                      onClick={() => closeModal()}
                     />
                   </DivContainerButton>
                 </ContainerButtons>
@@ -144,7 +160,7 @@ const ContentContainer = (props) => {
                     <Button
                       label={"Cancelar"}
                       color={"#da534f"}
-                      onClick={() => setActionbutton("clean")}
+                      onClick={() => closeModal()}
                     />
                   </DivContainerButton>
                 </ContainerButtons>
