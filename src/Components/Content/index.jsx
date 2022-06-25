@@ -15,11 +15,10 @@ import api from "../../services/Api";
 import { UserContextProvider } from "../../services/context";
 
 import { Toast } from "devextreme-react/toast";
+import { isOptionGroup } from "@mui/base";
 const ContentContainer = (props) => {
   const { list, setList } = useContext(userContext);
   const [actionButton, setActionbutton] = useState("");
-  const [updateValue, setUpdateValue] = useState("");
-  const [fiedlsApi, setFiedlsApi] = useState();
   const [toastConfig, setToastConfig] = useState({
     isVisible: false,
     type: "info",
@@ -39,11 +38,7 @@ const ContentContainer = (props) => {
     COD_PK,
   } = params;
 
-
- 
-
   const closeModal = async (e) => {
-
     let closePayload = {
       COD_LICENCIAMENTO: COD_LICENCIAMENTO,
       COD_ROTINA: COD_ROTINA,
@@ -54,16 +49,47 @@ const ContentContainer = (props) => {
     api.post("cadastro/updateRotinaUser", closePayload);
   };
 
-  const saveUpdate = async () => {
+  const saveUpdate = async (e) => {
+    // console.log({list})
+    let listFiedls = [];
+    let updateValues = {};
+    let invalidFields = []
 
-    const updateValues =  list.reduce((target, key, index) => {
-      target[key.fieldname] = key.conteudo;
-
-      return target
+    // Pegando todos os campos
+    list.map((obj) => {
+      if(obj.obrigatorio){
+        listFiedls.push(obj.fieldname);
+      }
+      
     });
-    
+// Pegando todos os valores
+    list.map((obj) => {
+      updateValues = {
+        ...updateValues,
+        [obj.fieldname]: obj.conteudo,
+      };
+    });
+// Validando campos obrigatorios
+    listFiedls.map((item) => {
+      if(updateValues[item] === ''){
+        invalidFields = [...invalidFields, item]
+      }
+      
+    });
+
+ if(invalidFields.length > 0){
+
+  return  setToastConfig({
+    isVisible: true,
+    type: "warning",
+    message: "Ops.. Por favor, preencha todos os campos!",
+  });
+
+ }
+
+   
     const UpdatePayload = {
-      cod_sistema: updateValues?.conteudo,
+      cod_sistema: updateValues?.cod_sistema,
       nome_sistema: updateValues?.nome_sistema,
       dtc_sistema: updateValues?.dtc_sistema,
       atv_sistema: updateValues?.atv_sistema,
@@ -119,7 +145,6 @@ const ContentContainer = (props) => {
     getInfo();
   }, []);
 
-
   return (
     <ContainerContentMain>
       <>
@@ -130,46 +155,45 @@ const ContentContainer = (props) => {
               message={toastConfig.message}
               type={toastConfig.type}
               onHiding={onHiding}
-              displayTime={600}
+              displayTime={1000}
             />
 
-              <FormCadMenu
-              >
-                {TIPO.toLowerCase() === "v" ? (
-                  <ContainerButtons justifyContent={"space-between"}>
-                    <DivContainerButton lado={"start"}>
-                      <Button
-                        label={"Fechar"}
-                        color={"#da534f"}
-                        onClick={() => closeModal()}
-                      />
-                    </DivContainerButton>
-                  </ContainerButtons>
-                ) : (
-                  <ContainerButtons justifyContent={"space-between"}>
-                    <DivContainerButton lado={"start"}>
-                      <Button
-                        label={"Opções"}
-                        color={"#418bca"}
-                        onClick={() => setActionbutton("#")}
-                      />
-                    </DivContainerButton>
+            <FormCadMenu>
+              {TIPO.toLowerCase() === "v" ? (
+                <ContainerButtons justifyContent={"space-between"}>
+                  <DivContainerButton lado={"start"}>
+                    <Button
+                      label={"Fechar"}
+                      color={"#da534f"}
+                      onClick={() => closeModal()}
+                    />
+                  </DivContainerButton>
+                </ContainerButtons>
+              ) : (
+                <ContainerButtons justifyContent={"space-between"}>
+                  <DivContainerButton lado={"start"}>
+                    <Button
+                      label={"Opções"}
+                      color={"#418bca"}
+                      onClick={() => setActionbutton("#")}
+                    />
+                  </DivContainerButton>
 
-                    <DivContainerButton lado={"end"}>
-                      <Button
-                        label={"Confirmar"}
-                        color={"#5bb85c"}
-                         onClick={() => saveUpdate()}
-                      />
-                      <Button
-                        label={"Cancelar"}
-                        color={"#da534f"}
-                        onClick={() => closeModal()}
-                      />
-                    </DivContainerButton>
-                  </ContainerButtons>
-                )}
-              </FormCadMenu>
+                  <DivContainerButton lado={"end"}>
+                    <Button
+                      label={"Confirmar"}
+                      color={"#5bb85c"}
+                      onClick={(e) => saveUpdate(e)}
+                    />
+                    <Button
+                      label={"Cancelar"}
+                      color={"#da534f"}
+                      onClick={() => closeModal()}
+                    />
+                  </DivContainerButton>
+                </ContainerButtons>
+              )}
+            </FormCadMenu>
           </div>
         )}
       </>

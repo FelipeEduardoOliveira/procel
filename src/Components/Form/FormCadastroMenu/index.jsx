@@ -33,7 +33,7 @@ const FormCadMenu = ({  children }) => {
 
 
   return (
-    <ContainerForm onSubmit={(e) =>onSubmit()}>
+    <ContainerForm>
       <FieldContainerInput>
         <FilterContainerInputSepareted>
           <FilterContainerInputSepareted__div width={"20%"}>
