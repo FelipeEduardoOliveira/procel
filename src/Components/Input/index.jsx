@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { ConntainerNewInput, ContainerInput, Imagem, InputMain, MyNewInput, MySpan } from "./styles";
-// import ErrorIcon from "@src/Assets/error.png";
+import React from "react";
+import { ConntainerNewInput, MyNewInput, MySpan } from "./styles";
+
 
 
 const Input = ({
@@ -24,10 +24,11 @@ const Input = ({
             error={error}
             onClick={onClick}
         />
-
         <MySpan error={error}>
                 {placeholder}
         </MySpan>
+
+        
 
     </ConntainerNewInput>
   );

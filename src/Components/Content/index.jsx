@@ -5,17 +5,12 @@ import {
   ContainerButtons,
   DivContainerButton,
 } from "./styled";
-import Form from "../Form";
 import FormCadMenu from "../Form/FormCadastroMenu";
 import userContext from "../../services/context";
 import Button from "../Button";
-import { FieldaReturnApi } from "../../services/utils/handleFields";
 import api from "../../services/Api";
 
-import { UserContextProvider } from "../../services/context";
-
 import { Toast } from "devextreme-react/toast";
-import { isOptionGroup } from "@mui/base";
 const ContentContainer = (props) => {
   const { list, setList } = useContext(userContext);
   const [actionButton, setActionbutton] = useState("");

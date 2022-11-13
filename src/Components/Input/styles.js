@@ -55,9 +55,9 @@ export const MyNewInput = styled.input`
   background: transparent;
   transition: border-color 0.2s;
 
-  &&:invalid{
+  /* &&:invalid{
     border-bottom: 2px solid #ff4646 
-  }
+  } */
 
   &::placeholder {
     color: transparent;
