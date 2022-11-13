@@ -8,7 +8,7 @@ import {
   validateLoginFields,
   sendBodyToForgtPasswordApi,
   needChangePassword,
-  validateRefreshPassword
+  validateRefreshPassword,
 } from "./utils";
 import {
   ContainerLogin,
@@ -20,10 +20,11 @@ import {
   AlertContainer,
   ImagemContainer,
   Imagem,
+  ContainerLoad,
 } from "./style";
 import Rememberme from "../../Components/Remember";
 import BasicAlerts from "../../Components/Alert";
-
+import Loading from "../../Components/Loading";
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,8 @@ const Login = () => {
   const [rememberPassword, setRememberPassword] = useState(false);
   const [sendForgetPass, setSendForgetPass] = useState(false);
   const [refreshPassword, setRefreshPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   // notify("warning", "Usuario nao encontrado", setModalAlert)
 
   const logIn = async () => {
@@ -42,6 +44,7 @@ const Login = () => {
     if (Object.keys(invalidFields).length > 0) {
       notify("error", "Preencha todos os campos", setModalAlert);
       setErrors(invalidFields);
+      setLoading(false);
       return;
     }
 
@@ -59,12 +62,13 @@ const Login = () => {
       if (data.cod_usuario > 0) {
         if (needChangePassword(data)) {
           setRefreshPassword(!refreshPassword);
-          setPassword('')
+          setPassword("");
           notify(
             "info",
             "Precisamos que você altere a sua senha!",
             setModalAlert
           );
+          setLoading(false);
           return;
         }
         notify("success", "Usuário logado com sucesso!", setModalAlert);
@@ -72,6 +76,7 @@ const Login = () => {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
     }
+    setLoading(false)
   };
 
   const forgetPassword = async () => {
@@ -79,6 +84,7 @@ const Login = () => {
     if (Object.keys(invalidFields).length > 0) {
       notify("error", "Preencha todos os campos", setModalAlert);
       setErrors(invalidFields);
+      setLoading(false)
       return;
     }
 
@@ -102,28 +108,36 @@ const Login = () => {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
     }
+    setLoading(false)
   };
 
   const sendNewPassword = async () => {
-    let invalidFields = validateRefreshPassword(oldPassword,newPassword,password);
+    let invalidFields = validateRefreshPassword(
+      oldPassword,
+      newPassword,
+      password
+    );
     if (Object.keys(invalidFields).length > 0) {
-
-      if(invalidFields.includes('senhaDivergente')){
-        setErrors(['Nova senha', 'Confirmar senha']);
+      if (invalidFields.includes("senhaDivergente")) {
+        setErrors(["Nova senha", "Confirmar senha"]);
         notify("warning", "As senhas não são iguais", setModalAlert);
-        return
+        setLoading(false)
+        return;
       }
 
       notify("error", "Preencha todos os campos", setModalAlert);
       setErrors(invalidFields);
+      setLoading(false)
       return;
     }
 
     notify("success", "Senha alterada com sucesso!", setModalAlert);
+    setLoading(false)
     return;
   };
 
   const handleTypeFormAction = () => {
+    setLoading(true)
     if (sendForgetPass) {
       forgetPassword();
       return;
@@ -136,13 +150,18 @@ const Login = () => {
     }
   };
 
-
   useEffect(() => {
     setErrors([]);
-  }, [login, password, oldPassword,newPassword]);
+  }, [login, password, oldPassword, newPassword]);
 
   return (
     <ContainerLogin>
+      {loading && (
+        <ContainerLoad>
+          <Loading />
+        </ContainerLoad>
+      )}
+
       <AlertContainer>
         <BasicAlerts modalAlert={modalAlert} />
       </AlertContainer>
@@ -190,7 +209,7 @@ const Login = () => {
           )}
           {refreshPassword && (
             <ForgotPassword onClick={() => setShowPassword(!showPassword)}>
-              {!showPassword ? 'Mostrar senha' : 'Ocultar senha'}
+              {!showPassword ? "Mostrar senha" : "Ocultar senha"}
             </ForgotPassword>
           )}
         </DivisorInput>

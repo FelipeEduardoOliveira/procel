@@ -11,6 +11,15 @@ export const ContainerLogin = styled.div`
   background-color: #000000db;
 `;
 
+export const ContainerLoad = styled.div`
+position: absolute;
+background-color: #9f9e9e66;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 100vh;
+`
 
 export const FormContainer = styled.div`
  width: 400px;
