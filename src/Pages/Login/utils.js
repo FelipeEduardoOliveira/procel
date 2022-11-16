@@ -25,6 +25,31 @@ export async function sendBodyToLoginApi(email, pass) {
 
   return response;
 }
+export async function sendBodyRefreshPasswordApi(codUser, pass) {
+  const body = {
+    SENHA: pass,
+    COD_USUARIO: codUser
+  }
+
+  const response = await api
+    .post("/usuario/alterarsenha", body)
+    .then((res) => {
+      return {
+        status: res.status,
+        message: res.statusText,
+        body: res.data.result,
+      };
+    })
+    .catch((error) => {
+      return {
+        status: error.code,
+        message: error.message,
+        body: {},
+      };
+    });
+
+  return response;
+}
 
 export async function sendBodyToForgtPasswordApi(email) {
   const body = {
@@ -51,7 +76,7 @@ export async function sendBodyToForgtPasswordApi(email) {
   return response;
 }
 
-export const notify = (type, message, setModalAlert, timeBox = 5000) => {
+export const notify = async (type, message, setModalAlert, timeBox = 5000) => {
   setModalAlert({
     alertType: type,
     message: message,
@@ -97,4 +122,10 @@ export function validateRefreshPassword(oldPassword, newPassword, confirmPasswor
 
 export function needChangePassword(data) {
   return data.forca_senha === 'V' ? true : false;
+}
+
+
+export function saveAccess(login, pass, remember){
+   localStorage.setItem('myAccess', JSON.stringify({login, pass, remember}));
+
 }

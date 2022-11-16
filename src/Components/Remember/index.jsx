@@ -6,7 +6,7 @@ const Rememberme = ({ value, label, onchange }) => {
       <input
         type={"checkbox"}
         id="remember-me"
-        value={value}
+        checked={value}
         onChange={(e) => onchange(e.target.checked)}
       />
 

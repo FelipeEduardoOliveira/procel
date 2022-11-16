@@ -9,6 +9,8 @@ import {
   sendBodyToForgtPasswordApi,
   needChangePassword,
   validateRefreshPassword,
+  sendBodyRefreshPasswordApi,
+  saveAccess
 } from "./utils";
 import {
   ContainerLogin,
@@ -25,6 +27,7 @@ import {
 import Rememberme from "../../Components/Remember";
 import BasicAlerts from "../../Components/Alert";
 import Loading from "../../Components/Loading";
+import { useNavigate   } from "react-router-dom";
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +40,8 @@ const Login = () => {
   const [refreshPassword, setRefreshPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [codUser, setCodUser] = useState(0);
+  const navigate = useNavigate();
   // notify("warning", "Usuario nao encontrado", setModalAlert)
 
   const logIn = async () => {
@@ -60,6 +65,7 @@ const Login = () => {
       let data = response.body;
 
       if (data.cod_usuario > 0) {
+        setCodUser(data.cod_usuario);
         if (needChangePassword(data)) {
           setRefreshPassword(!refreshPassword);
           setPassword("");
@@ -71,7 +77,13 @@ const Login = () => {
           setLoading(false);
           return;
         }
-        notify("success", "Usuário logado com sucesso!", setModalAlert);
+        await notify("success", "Usuário logado com sucesso!", setModalAlert);
+        navigate("/dashboard");
+        if(rememberPassword){
+          saveAccess(login, password, rememberPassword)
+        }else{
+          localStorage.removeItem('myAccess')
+        }
       } else {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
@@ -101,9 +113,10 @@ const Login = () => {
       if (data.result) {
         notify(
           "success",
-          "Enviamos um email para recuperar sua senha!",
+          "Enviamos um email com uma senha temporaria!",
           setModalAlert
         );
+        setSendForgetPass(!sendForgetPass)
       } else {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
@@ -131,9 +144,29 @@ const Login = () => {
       return;
     }
 
-    notify("success", "Senha alterada com sucesso!", setModalAlert);
-    setLoading(false)
-    return;
+    let response = await sendBodyRefreshPasswordApi(codUser, newPassword);
+
+    if(response.body) {
+      notify("success", "Senha alterada com sucesso!", setModalAlert);
+      setLoading(false);
+      navigate("/dashboard");
+      if(rememberPassword){
+        saveAccess(login, password, rememberPassword)
+      }else{
+        localStorage.removeItem('myAccess')
+      }
+      return;
+    } else{
+      notify("warning", "Ops! tente novamente mais tarde", setModalAlert);
+      setLoading(false);
+      setRefreshPassword(!refreshPassword)
+      return;
+    }
+    
+    
+
+  
+ 
   };
 
   const handleTypeFormAction = () => {
@@ -149,6 +182,23 @@ const Login = () => {
       logIn();
     }
   };
+
+  function getRememberPassword(){
+    let local = JSON.parse(localStorage.getItem('myAccess'));
+
+    if(local?.remember){
+      console.log(local)
+      setRememberPassword(local.remember)
+      setPassword(local.pass)
+      setLogin(local.login);
+      
+    }
+
+  }
+
+  useEffect(()=>{
+    getRememberPassword()
+  },[])
 
   useEffect(() => {
     setErrors([]);
@@ -197,14 +247,18 @@ const Login = () => {
         )}
 
         <DivisorInput>
-          <Rememberme
-            label={"Lembrar senha"}
-            value={rememberPassword}
-            onchange={(e) => setRememberPassword(e)}
-          />
+        {!refreshPassword &&(
+           <Rememberme
+           label={"Lembrar senha"}
+           value={rememberPassword}
+           onchange={(e) => setRememberPassword(e)}
+         />
+        )
+}
+         
           {!refreshPassword && (
             <ForgotPassword onClick={() => setSendForgetPass(!sendForgetPass)}>
-              {!sendForgetPass ? "Esqueci a senha" : "Logar"}
+              {!sendForgetPass ? "Esqueci a senha" : "Voltar"}
             </ForgotPassword>
           )}
           {refreshPassword && (

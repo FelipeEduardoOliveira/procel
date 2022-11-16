@@ -3,7 +3,7 @@ import Aplication from '../../Layout/HomeLayout';
 import Login from '../../Pages/Login';
 import ContentContainer from '../../Components/Content';
 import {UserContextProvider} from '../context';
-
+import { Dashboard } from '../../Pages/Dashboard';
 const Rotas = () =>{
 
 
@@ -13,6 +13,7 @@ const Rotas = () =>{
         <UserContextProvider>
             <Routes>
                 <Route path='/' element={<Login/>} />
+                <Route path='/dashboard' element={<Dashboard/>} />
                 <Route path='/only-form/:idOnlyPage/:COD_LICENCIAMENTO/:COD_ROTINA/:COD_USUARIO/:TIPO/:COD_PK'  element={<ContentContainer/>} />
             </Routes>
             </UserContextProvider>
