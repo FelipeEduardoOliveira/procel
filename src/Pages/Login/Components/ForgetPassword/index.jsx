@@ -7,12 +7,12 @@ const ForgetPassword = ({login, setLogin, errors}) => {
   return (
     <>    
         <Input
-          name={"Email"}
+          name={"login"}
           onChange={(e) => setLogin(e)}
-          placeholder={"Email"}
+          placeholder={"login"}
           value={login}
-          error={errors?.includes("email")}
-          type={"email"}
+          error={errors?.includes("login")}
+          type={"login"}
         />
     </>
   );
