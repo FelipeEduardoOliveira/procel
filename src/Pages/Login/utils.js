@@ -1,8 +1,8 @@
 import api from "../../services/Api";
 
-export async function sendBodyToLoginApi(email, pass) {
+export async function sendBodyToLoginApi(login, pass) {
   const body = {
-    USUARIO: email,
+    USUARIO: login,
     SENHA: pass,
   };
 
@@ -51,9 +51,9 @@ export async function sendBodyRefreshPasswordApi(codUser, pass) {
   return response;
 }
 
-export async function sendBodyToForgtPasswordApi(email) {
+export async function sendBodyToForgtPasswordApi(login) {
   const body = {
-    USUARIO: email,
+    USUARIO: login,
   };
 
   const response = await api
@@ -94,11 +94,11 @@ export function validateLoginFields(login, pass, typeFormValidation) {
 
   switch (typeFormValidation) {
     case "login":
-      !login && erros.push("email");
+      !login && erros.push("login");
       !pass && erros.push("senha");
       break;
     case "forgotPassword":
-      !login && erros.push("email");
+      !login && erros.push("login");
       break;
   }
 
@@ -128,4 +128,21 @@ export function needChangePassword(data) {
 export function saveAccess(login, pass, remember){
    localStorage.setItem('myAccess', JSON.stringify({login, pass, remember}));
 
+}
+
+export const maskCnpj = (v) => {
+  v = v.replace(/\D/g, "")
+
+  if (v.length <= 11) {
+    v = v.replace(/(\d{3})(\d)/, "$1.$2")
+    v = v.replace(/(\d{3})(\d)/, "$1.$2")
+    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+  } else {
+    v = v.replace(/^(\d{2})(\d)/, "$1.$2")
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+    v = v.replace(/\.(\d{3})(\d)/, ".$1/$2")
+    v = v.replace(/(\d{4})(\d)/, "$1-$2")
+  }
+
+  return v
 }

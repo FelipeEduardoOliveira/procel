@@ -10,7 +10,8 @@ import {
   needChangePassword,
   validateRefreshPassword,
   sendBodyRefreshPasswordApi,
-  saveAccess
+  saveAccess,
+  maskCnpj
 } from "./utils";
 import {
   ContainerLogin,
@@ -195,6 +196,7 @@ const Login = () => {
     }
 
   }
+
 
   useEffect(()=>{
     getRememberPassword()

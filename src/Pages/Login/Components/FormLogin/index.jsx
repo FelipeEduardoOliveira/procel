@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../../../Components/Input";
 
 
 const FormLogin = ({login, setLogin, password, setPassword, errors}) => {
 
 
+
   return (
     <>   
 
         <Input
-          name={"Email"}
+          name={"login"}
           onChange={(e) => setLogin(e)}
-          placeholder={"Email"}
+          placeholder={"login"}
           value={login}
-          error={errors?.includes("email")}
-          type={"email"}
+          error={errors?.includes("login")}
+          // type={"login"}
         />
 
         <Input
