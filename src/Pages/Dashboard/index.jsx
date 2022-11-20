@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom'
-import { logged } from '../Login/utils';
+import {logged} from '../../services/utils/logged';
 
 export const Dashboard = ()=>{
     const navigate = useNavigate();

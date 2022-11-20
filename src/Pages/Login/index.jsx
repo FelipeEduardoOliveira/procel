@@ -10,8 +10,7 @@ import {
   needChangePassword,
   validateRefreshPassword,
   sendBodyRefreshPasswordApi,
-  saveAccess,
-  logged
+  saveAccess
 } from "./utils";
 import {
   ContainerLogin,
@@ -29,6 +28,9 @@ import Rememberme from "../../Components/Remember";
 import BasicAlerts from "../../Components/Alert";
 import Loading from "../../Components/Loading";
 import { useNavigate   } from "react-router-dom";
+import {logged} from '../../services/utils/logged';
+
+
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +46,14 @@ const Login = () => {
   const [codUser, setCodUser] = useState(0);
   const navigate = useNavigate();
   // notify("warning", "Usuario nao encontrado", setModalAlert)
+
+  const verifyIsLogged = () =>{
+    let auth = JSON.parse(localStorage.getItem('isLogged'));
+    if(auth.isLogged) {
+      navigate("/dashboard");
+    }
+  }
+
 
   const logIn = async () => {
     let invalidFields = validateLoginFields(login, password, "login");
@@ -201,7 +211,8 @@ const Login = () => {
 
 
   useEffect(()=>{
-    getRememberPassword()
+    getRememberPassword();
+    verifyIsLogged();
   },[])
 
   useEffect(() => {
