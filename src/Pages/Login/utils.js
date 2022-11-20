@@ -146,3 +146,8 @@ export const maskCnpj = (v) => {
 
   return v
 }
+
+
+export const logged = (isLogged) =>{
+  localStorage.setItem('isLogged', JSON.stringify({isLogged}));
+}

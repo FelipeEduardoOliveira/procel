@@ -1,11 +1,13 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom'
+import { logged } from '../Login/utils';
 
 export const Dashboard = ()=>{
     const navigate = useNavigate();
 
     const logOut = ()=>{
         navigate("/");
+        logged(false);
     }
     
     return(

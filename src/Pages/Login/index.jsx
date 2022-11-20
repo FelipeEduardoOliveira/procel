@@ -11,7 +11,7 @@ import {
   validateRefreshPassword,
   sendBodyRefreshPasswordApi,
   saveAccess,
-  maskCnpj
+  logged
 } from "./utils";
 import {
   ContainerLogin,
@@ -80,6 +80,7 @@ const Login = () => {
         }
         await notify("success", "Usuário logado com sucesso!", setModalAlert);
         navigate("/dashboard");
+        logged(true);
         if(rememberPassword){
           saveAccess(login, password, rememberPassword)
         }else{
@@ -151,6 +152,7 @@ const Login = () => {
       notify("success", "Senha alterada com sucesso!", setModalAlert);
       setLoading(false);
       navigate("/dashboard");
+      logged(true);
       if(rememberPassword){
         saveAccess(login, password, rememberPassword)
       }else{
