@@ -8,7 +8,6 @@ export const ContainerLogin = styled.div`
   /* width: 100%; */
   height: 100vh;
   /* background-image: url('https://myg3plataform.s3-sa-east-1.amazonaws.com/background.jpg'); */
-  background-color: #000000db;
 `;
 
 export const ContainerLoad = styled.div`
