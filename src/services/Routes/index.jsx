@@ -29,7 +29,7 @@ const Rotas = () =>{
 const PrivateRoutes = () => {
   let auth = JSON.parse(localStorage.getItem('isLogged'));
   return (
-      auth.isLogged ? <Outlet/> : <Navigate to='/'/>
+      auth?.isLogged ? <Outlet/> : <Navigate to='/'/>
     )
   }
 

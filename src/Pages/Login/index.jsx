@@ -49,7 +49,7 @@ const Login = () => {
 
   const verifyIsLogged = () =>{
     let auth = JSON.parse(localStorage.getItem('isLogged'));
-    if(auth.isLogged) {
+    if(auth?.isLogged) {
       navigate("/dashboard");
     }
   }
