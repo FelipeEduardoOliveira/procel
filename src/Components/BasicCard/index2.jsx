@@ -20,7 +20,6 @@ export default function CardTeste({data}) {
           <p>Ativo</p>
         </FlagActive>
         <HeaderCard>
-          {/* Nome do card + apelido*/}
           <Title>{data?.nome_sistema}</Title>
           <Description >{data?.apelido}</Description>
         </HeaderCard>
