@@ -10,21 +10,21 @@ import { Grid } from '@mui/material';
 
 export default function BasicCard({data}) {
   return (
-    <Grid item xs={4} key={data.cod_licenciamento}>
+    <Grid item xs={4} key={data?.cod_licenciamento}>
 
     
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
       <Typography variant="h5" component="div">
-          {data.nome_sistema}
+          {data?.nome_sistema}
         </Typography>
         <br/>
         <Typography variant="overline">
-         {data.apelido}
+         {data?.apelido}
         </Typography>
        
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        {data.validade}
+        {data?.validade.split('T')[0]}
         </Typography>
       </CardContent>
       <CardActions>
