@@ -16,7 +16,6 @@ padding: 40px;
 export const TitleContainer = styled.div`
 /* background-color: white; */
 color: white;
-border: 1px solid white;
 border-radius: 25px;
 width: 100%;
 margin: 20px 0;

@@ -7,7 +7,7 @@ export const ContainerCard = styled.div`
   background-color: white;
   border-radius: 7px;
   :hover{
-    box-shadow: 0 0 7px 2px #e3d534;
+    box-shadow: 0 0 7px 2px #34dae3;
     cursor: pointer;
   }
 `;
