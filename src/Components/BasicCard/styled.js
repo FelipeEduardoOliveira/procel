@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const ContainerCard = styled.div`
   position: relative;
-  padding: 20px;
+  padding: 6px;
   height: auto;
   background-color: white;
   border-radius: 7px;
+  margin: 10px;
   :hover{
     box-shadow: 0 0 7px 2px #34dae3;
     cursor: pointer;
@@ -49,11 +50,11 @@ export const FlagActive = styled.div`
 
 
 export const Title = styled.h1`
-font-size: 26px
+font-size: 18px;
 `
 export const Description = styled.span`
 color: #686868;
-/* font-size: 18px; */
+font-size: 13px;
 font-weight: 700;
 `
 export const Subtitle = styled.h4`

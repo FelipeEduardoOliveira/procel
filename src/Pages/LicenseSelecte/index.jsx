@@ -1,7 +1,6 @@
 import React from "react";
-import { ContainerLicense, TitleContainer } from "./style";
+import { ContainerLicense, GridShowLicense, TitleContainer } from "./style";
 import CardTeste from "../../Components/BasicCard/index2.jsx";
-import { Box, Grid } from "@mui/material";
 import api from "../../services/Api";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -34,15 +33,9 @@ export const LicenseSelect = () => {
         <h1>Selecione o licenciamento</h1>
 
       </TitleContainer>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          spacing={{ xs: 3, md: 2 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {handleLicenseComponent02()}
-        </Grid>
-      </Box>
+      <GridShowLicense>
+      {handleLicenseComponent02()}
+      </GridShowLicense>
     </ContainerLicense>
   );
 };

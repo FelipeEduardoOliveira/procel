@@ -14,7 +14,7 @@ import {
 
 export default function CardTeste({data}) {
   return (
-    <Grid item xs={4} key={"teste"}>
+    // <Grid item xs={3} key={"teste"}>
       <ContainerCard>
         <HeaderCard>
           <Title>{data?.apelido}</Title>
@@ -22,10 +22,10 @@ export default function CardTeste({data}) {
 
         <BodyCard>
           <Subtitle>
-            Numero do licenciamento: <Description>{data?.cod_licenciamento | '-'}</Description>
+            Licenciamento: <Description>{data?.cod_licenciamento | '-'}</Description>
           </Subtitle>
         </BodyCard>
       </ContainerCard>
-    </Grid>
+    // </Grid>
   );
 }
