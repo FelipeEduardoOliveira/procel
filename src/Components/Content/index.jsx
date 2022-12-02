@@ -45,7 +45,6 @@ const ContentContainer = (props) => {
   };
 
   const saveUpdate = async (e) => {
-    // console.log({list})
     let listFiedls = [];
     let updateValues = {};
     let invalidFields = []

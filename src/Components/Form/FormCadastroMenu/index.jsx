@@ -24,11 +24,6 @@ const FormCadMenu = ({  children }) => {
   };
 
 
-  const onSubmit = (e)=>{
-
-    console.log({e})
-    e.preventDefault()
-  }
   
 
 

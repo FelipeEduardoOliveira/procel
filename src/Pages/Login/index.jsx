@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FormLogin from "./Components/FormLogin";
 import ForgetPassword from "./Components/ForgetPassword";
 import ChangePassword from "./Components/ChangePassword";
@@ -29,10 +29,11 @@ import BasicAlerts from "../../Components/Alert";
 import Loading from "../../Components/Loading";
 import { useNavigate   } from "react-router-dom";
 import {logged} from '../../services/utils/logged';
-
+import userContext from "../../services/context";
 
 const Login = () => {
   const [login, setLogin] = useState("");
+  const {state} = useContext(userContext)
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassoword] = useState("");
@@ -200,7 +201,6 @@ const Login = () => {
     let local = JSON.parse(localStorage.getItem('myAccess'));
 
     if(local?.remember){
-      console.log(local)
       setRememberPassword(local.remember)
       setPassword(local.pass)
       setLogin(local.login);
@@ -214,6 +214,9 @@ const Login = () => {
     getRememberPassword();
     verifyIsLogged();
   },[])
+  useEffect(()=>{
+    console.log({state})
+  },[state])
 
   useEffect(() => {
     setErrors([]);
