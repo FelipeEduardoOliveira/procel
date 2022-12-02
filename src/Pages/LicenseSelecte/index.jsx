@@ -1,6 +1,6 @@
 import React from "react";
 import { ContainerLicense, GridShowLicense, TitleContainer } from "./style";
-import CardTeste from "../../Components/BasicCard/index2.jsx";
+import BasicCard from "../../Components/BasicCard/index.jsx";
 import api from "../../services/Api";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,7 +10,7 @@ export const LicenseSelect = () => {
 
   const getLicenciamento = async () => {
     let licenseApi = await api
-      .post("usuario/sistemausuario", { COD_USUARIO: 1 })
+      .post("usuario/sistemausuario", { COD_USUARIO: 120 })
       .then((res) => {
         return res.data;
       });
@@ -19,7 +19,7 @@ export const LicenseSelect = () => {
 
   const handleLicenseComponent02 = () => {
     return license.map((item) => {
-      return <CardTeste data={item} />;
+      return <BasicCard data={item} />;
     });
   };
 
