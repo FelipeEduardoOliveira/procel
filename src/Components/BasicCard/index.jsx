@@ -1,20 +1,34 @@
-import { Grid } from "@mui/material";
+
 import * as React from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import userContext from "../../services/context";
+import { logged } from "../../services/utils/logged";
+
 import {
   ContainerCard,
   HeaderCard,
   BodyCard,
-  ButtonContainerCard,
-  FlagActive,
   Title,
   Description,
   Subtitle,
-  Button
 } from "./styled";
 
 export default function BasicCard({data}) {
+  const { form, setForm } = useContext(userContext);
+  
+  const navigate = useNavigate();
+
+
+  const handleClick = () =>{
+    setForm({...form, cardSelected: data});
+    
+    logged(true);
+    navigate("/dashboard");
+  }
+
   return (
-      <ContainerCard>
+      <ContainerCard key={data.apelido} onClick={() =>handleClick()}>
         <HeaderCard>
           <Title>{data?.apelido}</Title>
         </HeaderCard>

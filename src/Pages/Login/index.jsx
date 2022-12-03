@@ -10,7 +10,7 @@ import {
   needChangePassword,
   validateRefreshPassword,
   sendBodyRefreshPasswordApi,
-  saveAccess
+  saveAccess,
 } from "./utils";
 import {
   ContainerLogin,
@@ -27,13 +27,12 @@ import {
 import Rememberme from "../../Components/Remember";
 import BasicAlerts from "../../Components/Alert";
 import Loading from "../../Components/Loading";
-import { useNavigate   } from "react-router-dom";
-import {logged} from '../../services/utils/logged';
+import { useNavigate } from "react-router-dom";
 import userContext from "../../services/context";
 
 const Login = () => {
   const [login, setLogin] = useState("");
-  const {state} = useContext(userContext)
+  const { form, setForm } = useContext(userContext);
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassoword] = useState("");
@@ -44,17 +43,23 @@ const Login = () => {
   const [refreshPassword, setRefreshPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [codUser, setCodUser] = useState(0);
+  const [codUser, setCodUser] = useState(0)
   const navigate = useNavigate();
   // notify("warning", "Usuario nao encontrado", setModalAlert)
 
-  const verifyIsLogged = () =>{
-    let auth = JSON.parse(localStorage.getItem('isLogged'));
-    if(auth?.isLogged) {
+  const verifyIsLogged = () => {
+    let auth = JSON.parse(localStorage.getItem("isLogged"));
+    setForm({ ...form, auth });
+    if (auth?.isLogged) {
       navigate("/dashboard");
     }
-  }
+  };
 
+
+  const redirectUser = (codUser) =>{
+    navigate("/license");
+    setForm({ ...form, user: { login, password, cod_usuario: codUser } });
+  }
 
   const logIn = async () => {
     let invalidFields = validateLoginFields(login, password, "login");
@@ -64,6 +69,8 @@ const Login = () => {
       setLoading(false);
       return;
     }
+
+   
 
     let response = await sendBodyToLoginApi(login, password);
 
@@ -78,6 +85,7 @@ const Login = () => {
 
       if (data.cod_usuario > 0) {
         setCodUser(data.cod_usuario);
+       
         if (needChangePassword(data)) {
           setRefreshPassword(!refreshPassword);
           setPassword("");
@@ -90,18 +98,17 @@ const Login = () => {
           return;
         }
         await notify("success", "Usuário logado com sucesso!", setModalAlert);
-        navigate("/dashboard");
-        logged(true);
-        if(rememberPassword){
-          saveAccess(login, password, rememberPassword)
-        }else{
-          localStorage.removeItem('myAccess')
+        redirectUser(data.cod_usuario)
+        if (rememberPassword) {
+          saveAccess(login, password, rememberPassword);
+        } else {
+          localStorage.removeItem("myAccess");
         }
       } else {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const forgetPassword = async () => {
@@ -109,7 +116,7 @@ const Login = () => {
     if (Object.keys(invalidFields).length > 0) {
       notify("error", "Preencha todos os campos", setModalAlert);
       setErrors(invalidFields);
-      setLoading(false)
+      setLoading(false);
       return;
     }
 
@@ -129,12 +136,12 @@ const Login = () => {
           "Enviamos um email com uma senha temporaria!",
           setModalAlert
         );
-        setSendForgetPass(!sendForgetPass)
+        setSendForgetPass(!sendForgetPass);
       } else {
         notify("warning", "Usuário não encontrado", setModalAlert);
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const sendNewPassword = async () => {
@@ -147,44 +154,39 @@ const Login = () => {
       if (invalidFields.includes("senhaDivergente")) {
         setErrors(["Nova senha", "Confirmar senha"]);
         notify("warning", "As senhas não são iguais", setModalAlert);
-        setLoading(false)
+        setLoading(false);
         return;
       }
 
       notify("error", "Preencha todos os campos", setModalAlert);
       setErrors(invalidFields);
-      setLoading(false)
+      setLoading(false);
       return;
     }
 
     let response = await sendBodyRefreshPasswordApi(codUser, newPassword);
+    
 
-    if(response.body) {
+    if (response.body) {
       notify("success", "Senha alterada com sucesso!", setModalAlert);
       setLoading(false);
-      navigate("/dashboard");
-      logged(true);
-      if(rememberPassword){
-        saveAccess(login, password, rememberPassword)
-      }else{
-        localStorage.removeItem('myAccess')
+      redirectUser(codUser)
+      if (rememberPassword) {
+        saveAccess(login, password, rememberPassword);
+      } else {
+        localStorage.removeItem("myAccess");
       }
       return;
-    } else{
+    } else {
       notify("warning", "Ops! tente novamente mais tarde", setModalAlert);
       setLoading(false);
-      setRefreshPassword(!refreshPassword)
+      setRefreshPassword(!refreshPassword);
       return;
     }
-    
-    
-
-  
- 
   };
 
   const handleTypeFormAction = () => {
-    setLoading(true)
+    setLoading(true);
     if (sendForgetPass) {
       forgetPassword();
       return;
@@ -197,26 +199,20 @@ const Login = () => {
     }
   };
 
-  function getRememberPassword(){
-    let local = JSON.parse(localStorage.getItem('myAccess'));
+  function getRememberPassword() {
+    let local = JSON.parse(localStorage.getItem("myAccess"));
 
-    if(local?.remember){
-      setRememberPassword(local.remember)
-      setPassword(local.pass)
+    if (local?.remember) {
+      setRememberPassword(local.remember);
+      setPassword(local.pass);
       setLogin(local.login);
-      
     }
-
   }
 
-
-  useEffect(()=>{
+  useEffect(() => {
     getRememberPassword();
     verifyIsLogged();
-  },[])
-  useEffect(()=>{
-    console.log({state})
-  },[state])
+  }, []);
 
   useEffect(() => {
     setErrors([]);
@@ -265,15 +261,14 @@ const Login = () => {
         )}
 
         <DivisorInput>
-        {!refreshPassword &&(
-           <Rememberme
-           label={"Lembrar senha"}
-           value={rememberPassword}
-           onchange={(e) => setRememberPassword(e)}
-         />
-        )
-}
-         
+          {!refreshPassword && (
+            <Rememberme
+              label={"Lembrar senha"}
+              value={rememberPassword}
+              onchange={(e) => setRememberPassword(e)}
+            />
+          )}
+
           {!refreshPassword && (
             <ForgotPassword onClick={() => setSendForgetPass(!sendForgetPass)}>
               {!sendForgetPass ? "Esqueci a senha" : "Voltar"}

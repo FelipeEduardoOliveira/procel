@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 const UserContextProvider = ({ children }) => {
   const [state, saveState] = useState('Dados do licenciado');
-  const [form, setForm] = useState();
+  const [form, setForm] = useState({});
   const [list, setList] = useState([]); 
 
 
