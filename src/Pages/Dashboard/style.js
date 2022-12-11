@@ -47,4 +47,5 @@ export const AplicationSectionDashboard = styled.div`
   padding: 20px;
   background-color: white;
  height: 100%;
+ text-align: center;
 `;
