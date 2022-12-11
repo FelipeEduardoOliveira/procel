@@ -43,5 +43,8 @@ export const AplicationHeader = styled.div`
 `;
 
 export const AplicationSectionDashboard = styled.div`
+  margin: 20px;
   padding: 20px;
+  background-color: white;
+ height: 100%;
 `;

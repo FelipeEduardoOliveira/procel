@@ -3,11 +3,12 @@ import styled from "styled-components";
 const ContainerHeader = styled.div`
   background-color: #fff;
   min-height: 75px;
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
+  margin: 0 20px;
+  margin-top: 20px;
 `;
 
 const IconNavigate = styled.img`

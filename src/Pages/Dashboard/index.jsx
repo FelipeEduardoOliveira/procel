@@ -40,6 +40,7 @@ export const Dashboard = () => {
       <AplicationHeader>
         <Header />
       </AplicationHeader>
+      
       <AplicationSectionDashboard>
         <h1>Welcome to Dash</h1>
         <button onClick={() => logOut()}>Sair</button>
