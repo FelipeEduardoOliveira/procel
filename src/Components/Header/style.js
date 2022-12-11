@@ -37,6 +37,30 @@ const BulletNotification = styled.div`
   background-color: red;
   display: ${(props) => (props.hasNotification ? "block" : "none")};
 `;
+const AvatarListMenu = styled.div`
+  background-color: white;
+  width: 130px;
+  height: 170px;
+  position: absolute;
+  top: 85px;
+  right: 30px;
+  border: 1px solid black;
+  cursor: default;
+  display: ${props => props.showAvatarMenu ? 'flex' : 'none'};
+  flex-direction: row;
+  padding: 20px;
+`;
+const ItemAvatarListMenu = styled.li`
+margin: 10px 0;
+/* width: 100%; */
+cursor: pointer;
+font-size: 17px;
+:hover{
+  background-color: gold;
+
+}
+`
+
 const ContainerAvatar = styled.div`
   width: 50px;
   height: 50px;
@@ -44,10 +68,12 @@ const ContainerAvatar = styled.div`
   margin-left: 20px;
   background-color: springgreen;
   cursor: pointer;
-  background-image: url(${props => props.Avatar_Icon});
+  background-image: url(${(props) => props.Avatar_Icon});
   background-position: center;
   background-size: cover;
 `;
+
+
 
 export {
   ContainerHeader,
@@ -57,4 +83,6 @@ export {
   ContainerNotification,
   BulletNotification,
   ContainerAvatar,
+  AvatarListMenu,
+  ItemAvatarListMenu
 };
