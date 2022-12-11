@@ -5,17 +5,20 @@ import AlertNotification from "../../assets/alert_notification.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import Avatar from "./Avatar";
+import { useContext } from "react";
+import userContext from "../../services/context";
 
 
 const Header = () => {
   const [hasNotification, setHasNotification] = useState(true);
+  const { openMenuList, setOpenMenuList } = useContext(userContext);
 
   useEffect(()=>{
     console.log({hasNotification})
   },[hasNotification])
   return (
     <SC.ContainerHeader>
-      <SC.IconNavigate src={MenuIcon} />
+      <SC.IconNavigate src={MenuIcon} onClick={()=> setOpenMenuList(!openMenuList)}/>
       <SC.UserContainerActions>
         <SC.ItemList>
           <SC.ContainerNotification onClick={() => setHasNotification(!hasNotification)}>

@@ -1,30 +1,46 @@
-import React, { useContext, useEffect } from 'react';
-import {useNavigate} from 'react-router-dom'
-import Header from '../../Components/Header';
-import userContext from '../../services/context';
-import {logged} from '../../services/utils/logged';
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../../Components/Header";
+import userContext from "../../services/context";
+import { logged } from "../../services/utils/logged";
+import SidebarMenu from "../../Components/SidebarMenu";
+import { ContainerDashboard, AplicationHeader, AplicationSectionDashboard, AplicationSidebarMenu, LeftContainer, RightContainer } from "./style";
 
+export const Dashboard = () => {
+  const navigate = useNavigate();
+  const { form, openMenuList } = useContext(userContext);
+  const logOut = () => {
+    navigate("/");
+    logged(false);
+  };
 
-export const Dashboard = ()=>{
-    const navigate = useNavigate();
-    const { form, setForm } = useContext(userContext);
+  useEffect(() => {
+    console.log({ form });
+  }, [form]);
 
-    const logOut = ()=>{
-        navigate("/");
-        logged(false);
-    }
+  return (
+    <ContainerDashboard>
+        <LeftContainer openMenuList={openMenuList}>
 
-    useEffect(()=>{
-        console.log({form})
-    },[form])
+        <AplicationSidebarMenu>
+        <SidebarMenu />
+      </AplicationSidebarMenu>
     
-    return(
-        <>
+        </LeftContainer>
+      
+      <RightContainer>
+
+      <AplicationHeader>
         <Header />
+      </AplicationHeader>
+      <AplicationSectionDashboard>
         <h1>Welcome to Dash</h1>
-        <button onClick={(()=>logOut())}>
-        Sair
-        </button>
-        </>
-    )
-}
+        <button onClick={() => logOut()}>Sair</button>
+      </AplicationSectionDashboard>
+
+      </RightContainer>
+
+      
+    </ContainerDashboard>
+  );
+};
