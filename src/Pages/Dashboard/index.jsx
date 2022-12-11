@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
+import Header from '../../Components/Header';
 import userContext from '../../services/context';
 import {logged} from '../../services/utils/logged';
+
 
 export const Dashboard = ()=>{
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ export const Dashboard = ()=>{
     
     return(
         <>
+        <Header />
         <h1>Welcome to Dash</h1>
         <button onClick={(()=>logOut())}>
         Sair
