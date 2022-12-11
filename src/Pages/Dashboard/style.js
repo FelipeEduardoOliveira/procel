@@ -18,7 +18,7 @@ export const LogoMenuList = styled.img`
 
 export const AplicationSidebarMenu = styled.div`
  
-  height: 80%;
+  height: 74%;
   overflow-x: scroll;
 
   ::-webkit-scrollbar {
