@@ -19,6 +19,7 @@ const Rotas = () =>{
                 <Route path='/' element={<Login/>} />
                 <Route path='/license' element={<LicenseSelect/>} />
                 <Route path='/only-form/:idOnlyPage/:COD_LICENCIAMENTO/:COD_ROTINA/:COD_USUARIO/:TIPO/:COD_PK'  element={<ContentContainer/>} />
+                <Route path='*' element={<Login/> } />
             </Routes>
             </UserContextProvider>
         </BrowserRouter>
